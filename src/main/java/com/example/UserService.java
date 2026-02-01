@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserService {
@@ -17,7 +18,7 @@ public class UserService {
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, username);
                 stmt.executeQuery();
-                logger.info("User found: " + username);
+                logger.log(Level.INFO, "User found: {0}", username);
             }
         }
     }
@@ -30,7 +31,7 @@ public class UserService {
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, username);
                 stmt.execute();
-                logger.info("User deleted: " + username);
+                logger.log(Level.INFO, "User deleted: {0}", username);
             }
         }
     }
