@@ -13,10 +13,11 @@ public class UserService {
     // Uses PreparedStatement to prevent SQL Injection
     public void findUser(String username) throws SQLException {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/db", "root", System.getenv("DB_PASSWORD"))) {
-            String query = "SELECT * FROM users WHERE name = ?";
+            String query = "SELECT id, name, email FROM users WHERE name = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, username);
                 stmt.executeQuery();
+                logger.info("User found: " + username);
             }
         }
     }
@@ -29,6 +30,7 @@ public class UserService {
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, username);
                 stmt.execute();
+                logger.info("User deleted: " + username);
             }
         }
     }
